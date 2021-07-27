@@ -35,10 +35,10 @@ export const card = (bill) => {
     ? firstAndLastNames.split(".")[1]
     : firstAndLastNames;
 
+  const date = bill.date ? formatDate(bill.date) : bill.date;
+
   return `
-    <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${
-    bill.id
-  }'>
+    <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
       <div class='bill-card-name-container'>
         <div class='bill-card-name'> ${firstName} ${lastName} </div>
         <span class='bill-card-grey'> ... </span>
@@ -48,7 +48,7 @@ export const card = (bill) => {
         <span> ${bill.amount} € </span>
       </div>
       <div class='date-type-container'>
-        <span> ${formatDate(bill.date)} </span>
+        <span> ${date}</span>
         <span> ${bill.type} </span>
       </div>
     </div>
@@ -155,9 +155,11 @@ export default class {
     }
 
     bills.forEach((bill) => {
-      $(`#open-bill${bill.id}`).click((e) =>
-        this.handleEditTicket(e, bill, bills)
-      );
+      $(`#open-bill${bill.id}`)
+        .off("click")
+        .click((e) => {
+          this.handleEditTicket(e, bill, bills);
+        });
     });
 
     return bills;
