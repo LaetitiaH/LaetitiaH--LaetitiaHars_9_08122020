@@ -13,7 +13,7 @@ export default class {
     if (buttonNewBill)
       buttonNewBill.addEventListener("click", this.handleClickNewBill);
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`);
-    if (iconEye)
+    if (iconEye.length)
       iconEye.forEach((icon) => {
         icon.addEventListener("click", (e) => this.handleClickIconEye(icon));
       });
@@ -36,6 +36,7 @@ export default class {
   };
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   getBills = () => {
     const userEmail = localStorage.getItem("user")
       ? JSON.parse(localStorage.getItem("user")).email
