@@ -2,7 +2,7 @@
   "scripts": {
     "prettier": "prettier --write \"**\"",
     "prettier:check": "prettier --check \"**\"",
-    "test": "jest --coverage --noStackTrace --silent --watch"
+    "test": "jest --coverage --noStackTrace --silent"
   },
   "jest": {
     "verbose": false,
