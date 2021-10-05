@@ -70,4 +70,7 @@ export default {
       ],
     });
   },
+  post: (billToAdd) => {
+    return Promise.resolve({id: 12345});
+  },
 };

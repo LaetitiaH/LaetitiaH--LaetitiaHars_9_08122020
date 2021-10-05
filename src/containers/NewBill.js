@@ -21,22 +21,16 @@ export default class NewBill {
     $(".invalid-format").remove();
     const file = this.document.querySelector(`input[data-testid="file"]`)
       .files[0];
-
     if (file.type === "image/jpeg" || file.type === "image/png") {
       const filePath = e.target.value.split(/\\/g);
       const fileName = filePath[filePath.length - 1];
-      this.firestore.storage
-        .ref(`justificatifs/${fileName}`)
-        .put(file)
-        .then((snapshot) => snapshot.ref.getDownloadURL())
-        .then((url) => {
-          this.fileUrl = url;
-          this.fileName = fileName;
-        });
+
+      this.handleFirestoreStorage(fileName, file);
     } else {
       this.invalidFileFormat();
     }
   };
+
   handleSubmit = (e) => {
     $(".invalid-format").remove();
     e.preventDefault();
@@ -79,6 +73,21 @@ export default class NewBill {
     ).insertAfter(fileInput);
   };
 
+  /* istanbul ignore next */
+  handleFirestoreStorage = (fileName, file) => {
+    if (this.firestore) {
+      this.firestore.storage
+        .ref(`justificatifs/${fileName}`)
+        .put(file)
+        .then((snapshot) => snapshot.ref.getDownloadURL())
+        .then((url) => {
+          this.fileUrl = url;
+          this.fileName = fileName;
+        });
+    }
+  };
+
+  /* istanbul ignore next */
   // not need to cover this function by tests
   createBill = (bill) => {
     if (this.firestore) {
